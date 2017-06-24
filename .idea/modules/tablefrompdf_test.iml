@@ -11,7 +11,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="tablefrompdf_main" />
     <orderEntry type="library" name="Gradle: org.apache.pdfbox:pdfbox:2.0.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.itextpdf:itextpdf:5.5.11" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.pdfbox:fontbox:2.0.2" level="project" />
     <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
