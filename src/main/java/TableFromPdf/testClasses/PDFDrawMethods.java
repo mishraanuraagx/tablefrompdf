@@ -44,7 +44,26 @@ public class PDFDrawMethods {
           singleLineCoordinates[2] = sc.nextDouble();
           singleLineCoordinates[3] = sc.nextDouble();
           //TODO max: fix, make smaller coordinate values store in first 2
-
+          if (singleLineCoordinates[0].doubleValue() == singleLineCoordinates[2].doubleValue()
+              && singleLineCoordinates[1].doubleValue() > singleLineCoordinates[3].doubleValue()) {
+            double temp1 = singleLineCoordinates[1].doubleValue();
+            double temp2 = singleLineCoordinates[3].doubleValue();
+            singleLineCoordinates[1] = temp2;
+            singleLineCoordinates[3] = temp1;
+            System.out.println(currentLine);
+            System.out.println(singleLineCoordinates[0] + "," + singleLineCoordinates[1] + ","
+                + singleLineCoordinates[2] + "," + singleLineCoordinates[3]);
+          } else if (
+              singleLineCoordinates[1].doubleValue() == singleLineCoordinates[3].doubleValue() &&
+                  singleLineCoordinates[0].doubleValue() > singleLineCoordinates[2].doubleValue()) {
+            double temp1 = singleLineCoordinates[0].doubleValue();
+            double temp2 = singleLineCoordinates[2].doubleValue();
+            singleLineCoordinates[0] = temp2;
+            singleLineCoordinates[2] = temp1;
+            System.out.println(currentLine);
+            System.out.println(singleLineCoordinates[0] + "," + singleLineCoordinates[1] + ","
+                + singleLineCoordinates[2] + "," + singleLineCoordinates[3]);
+          }
           linesCoordinates.add(singleLineCoordinates);
           System.out.println("---added this lineCoordinate");
         } else {
@@ -91,6 +110,7 @@ public class PDFDrawMethods {
    * Figure out all rect created by lines intersecting with rect
    */
   public void getOtherRect() {
+    int gap = 15;
     System.out.println(
         "--------------------Figuring out All Rectangles created by lines intersecting with rect----------------------------");
 
@@ -102,10 +122,9 @@ public class PDFDrawMethods {
       /**
        * if y coordinate is same then horizontal
        * check whether its between y and y+h of rect coordinates
-       * and x1 coordinate should be <=x or <=x-10 (for lines not fully touching edges)
-       * and x2 >=x+w or >=x+w-10
-       * going to use 15 instead of 10
-       * where 10 is in points , can use smaller points*/
+       * and x1 coordinate should be <=x or <=x-15 (for lines not fully touching edges)
+       * and x2 >=x+w or >=x+w-15
+       * where 15 is in points , can use smaller points*/
       int sizeRC = rectanglesCoordinates.size();
 
       if (slc[1] == slc[3]) {
@@ -116,8 +135,8 @@ public class PDFDrawMethods {
               Stream.of(rectanglesCoordinates.get(j)).mapToDouble(Double::doubleValue).toArray();
           if (slc[1] > src[1] && slc[1] < (
               src[1] + src[3])) {
-            if (slc[0] <= (src[0] + 10) && slc[2] >= (
-                src[0] + src[2] - 10)) {
+            if (slc[0] <= (src[0] + 15) && slc[2] >= (
+                src[0] + src[2] - 15)) {
               System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
               System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
               System.out.println("Found one Horizontal Divider");
@@ -132,8 +151,8 @@ public class PDFDrawMethods {
               Stream.of(rectanglesCoordinates.get(j)).mapToDouble(Double::doubleValue).toArray();
           if (slc[0] > src[0] && slc[0] < (
               src[0] + src[2])) {
-            if (slc[1] <= (src[1] + 10) && slc[3] >= (
-                src[1] + src[3] - 10)) {
+            if (slc[1] <= (src[1] + 15) && slc[3] >= (
+                src[1] + src[3] - 15)) {
               System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
               System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
               System.out.println("Found one Vertical Divider");
