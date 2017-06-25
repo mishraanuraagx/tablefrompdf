@@ -14,12 +14,18 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 
 public class TableFromPdfTest {
+  public static String url = "assests\\PdfWithTable.pdf";
+  public static List<Double> xCoordinates = new ArrayList<>();
+  public static List<Double> yCoordinates = new ArrayList<>();
+  public static List<String> textList = new ArrayList<>();
+
   public static void run() throws IOException {
     File file = new File("assests\\PdfWithTable.pdf");
     PDDocument document = PDDocument.load(file);
@@ -99,7 +105,7 @@ public class TableFromPdfTest {
         {
           TextPosition firstPosition = textPositions.get(0);
 
-          writeString(String.format("[%s , %s]", firstPosition.getXDirAdj(), firstPosition.getYDirAdj()));
+          writeString(String.format("%s,%s,", firstPosition.getXDirAdj(), firstPosition.getYDirAdj()));
           startOfLine = false;
         }
         super.writeString(text, textPositions);
@@ -109,50 +115,62 @@ public class TableFromPdfTest {
 
     text = stripper2.getText(document);
     System.out.println("------------------------------------------------");
+    int i =0;
+//    System.out.println(text);
+    for(String str : text.split("\n")){
+      if(!str.isEmpty()){
+        String[] str2 = str.split(",");
+        xCoordinates.add(Double.parseDouble(str2[0]));
+        yCoordinates.add(Double.parseDouble(str2[1]));
+        textList.add(str2[2]);
+        i++;
+      }
+    }
 
-    System.out.println(text);
-
+    for(int n=0;n<i;n++){
+      System.out.println(xCoordinates.get(n)+","+yCoordinates.get(n)+","+textList.get(n));
+    }
     document.close();
 
     System.out.println("------------------------------------------------");
 
 
 
+
+
     // Output all drawing instruction for Rectangles
+    List<PDFCell> pdfCells = new ArrayList<>();
     BufferedReader br = new BufferedReader(new FileReader(file));
 
     Scanner sc;
     String currentLine;
-    int i=0;
+    int j=0;
     while((currentLine = br.readLine())!= null){
-      if(currentLine.contains(" re ")) {
-        System.out.println(i++ + " : " + currentLine);
-        sc = new Scanner(currentLine);
-        while (sc.hasNextDouble()) {
-          System.out.print(sc.nextDouble() + " ");
-        }
+      if(currentLine.contains(" re ") || currentLine.contains(" l ")) {
+        System.out.println(j++ + " : " + currentLine);
+//        sc = new Scanner(currentLine);
+//        while (sc.hasNextDouble()) {
+//          System.out.print(sc.nextDouble() + " ");
+//        }
+//        PDFCell pc = new PDFCell(sc.nextDouble(),sc.nextDouble(),sc.nextDouble(),sc.nextDouble());
+        int a=0;
+
+//        for(String str : textList){
+//          if(xCoordinates.get(a)>pc.getX() && xCoordinates.get(a)<=(pc.getX()+pc.getW())
+//              && yCoordinates.get(a)>pc.getY() && yCoordinates.get(a)<=(pc.getY()+pc.getH())){
+//
+//            System.out.println(xCoordinates.get(a)+","+yCoordinates.get(a)+","+textList.get(a));
+//          }
+//          a++;
+//        }
+//        pdfCells.add(pc);
+
         System.out.println();
       }
     }
 
 
 
-//    ObjectExtractor  oe = new ObjectExtractor(PDDocument.load(file));
-//    ExtractionAlgorithm extractor = new BasicExtractionAlgorithm();
-//
-//    PageIterator it = oe.extract();
-//
-//    while (it.hasNext()) {
-//      Page page = it.next();
-//
-//      for (Table table : extractor.extract(page)) {
-//        for (List<RectangularTextContainer> row : table.getRows()) {
-//          for (RectangularTextContainer cell : row) {
-//
-//          }
-//        }
-//      }
-//    }
 
   }
 }
