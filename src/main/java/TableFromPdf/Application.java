@@ -13,6 +13,12 @@ import TableFromPdf.testClasses.PDFTextWithLocation;
 import TableFromPdf.testClasses.TableFromPdfTest;
 
 public class Application {
+
+  //TODO max : write sorting methods for PDFDrawMethod class and PDFTextWithLocation
+  //TODO max : Write Algo to extract table from grouping cells
+  //TODO max : Try to figure out more cells using left over lines coordinates
+  //TODO max : See whether removing rectangles is good idea, dispose of bad cells/rectangles
+
   public static String url = "assests\\PdfWithTable.pdf";
   public static PDFTextStripper stripper;
 
