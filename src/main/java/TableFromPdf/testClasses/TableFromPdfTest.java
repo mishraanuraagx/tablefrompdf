@@ -18,67 +18,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import TableFromPdf.Application;
 
 
 public class TableFromPdfTest {
-  public static String url = "assests\\PdfWithTable.pdf";
+
   public static List<Double> xCoordinates = new ArrayList<>();
   public static List<Double> yCoordinates = new ArrayList<>();
   public static List<String> textList = new ArrayList<>();
 
+
   public static void run() throws IOException {
-    File file = new File("assests\\PdfWithTable.pdf");
+    File file = new File(Application.url);
     PDDocument document = PDDocument.load(file);
-    PDFTextStripper pdfStripper = new PDFTextStripper();
-    String text = pdfStripper.getText(document);
+    String text;
 
 
-
-//    String lines[] = text.split("\\r?\\n"); // give you all the lines separated by new line
-//    System.out.println(Arrays.toString(lines));
-//    System.out.println("------------------------------------------------");
-//    String cols[] = lines[0].split("\\s+");// gives array separated by whitespaces
-//    System.out.println(Arrays.toString(cols));
-//    System.out.println("------------------------------------------------");
-
-
-    // output all text
-
-
-    System.out.println(text);
-    System.out.println("------------------------------------------------");
 
     //output height and width of the document, can also be read from mediatype in pdf
     double w = document.getPage(0).getMediaBox().getWidth();
     double h = document.getPage(0).getMediaBox().getHeight();
     System.out.println(w +" , " + h);
 
-    Rectangle2D region = new Rectangle2D.Double(8.4,370,/* 370,*/ 575.52, 100);
-//    308.04 425.80 m 308.04 399.32 l S
-//    308.04 398.16 m 308.04 298.64 l S
-//    140.40 390.96 TD
-//    for 1X2.000
-//    Rectangle2D region = new Rectangle2D.Double(8.4,399.32,/* 370,*/ 575.52,50 ); // Line between data and column header
-    String regionName = "region";
-    PDFTextStripperByArea stripper;
-
-    stripper = new PDFTextStripperByArea();
-//    List<String> regionList = stripper.getRegions();
-//    for (String str : regionList){
-//      System.out.println(str);
-//    }
-//    System.out.println("------------------------------------------------");
-
-
-    // Extract text within a location
-    stripper.addRegion(regionName, region);
-    stripper.extractRegions(document.getPage(0));
-    text = stripper.getTextForRegion(regionName);
-    System.out.println(text);
-
-
-
-    System.out.println(System.getProperty("line.separator"));
+//    System.out.println(System.getProperty("line.separator"));
 
 
 
@@ -113,7 +75,8 @@ public class TableFromPdfTest {
       boolean startOfLine = true;
     };
 
-    text = stripper2.getText(document);
+//    text = stripper2.getText(document);
+    text = Application.stripper.getText(document);
     System.out.println("------------------------------------------------");
     int i =0;
 //    System.out.println(text);
@@ -153,16 +116,8 @@ public class TableFromPdfTest {
 //          System.out.print(sc.nextDouble() + " ");
 //        }
 //        PDFCell pc = new PDFCell(sc.nextDouble(),sc.nextDouble(),sc.nextDouble(),sc.nextDouble());
-        int a=0;
-
-//        for(String str : textList){
-//          if(xCoordinates.get(a)>pc.getX() && xCoordinates.get(a)<=(pc.getX()+pc.getW())
-//              && yCoordinates.get(a)>pc.getY() && yCoordinates.get(a)<=(pc.getY()+pc.getH())){
-//
-//            System.out.println(xCoordinates.get(a)+","+yCoordinates.get(a)+","+textList.get(a));
-//          }
-//          a++;
-//        }
+        PDFTextByRegion pdfTextByRegion = new PDFTextByRegion();
+//        pdfTextByRegion.textByCell();
 //        pdfCells.add(pc);
 
         System.out.println();
