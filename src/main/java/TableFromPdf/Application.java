@@ -60,6 +60,7 @@ public class Application {
 //      pdfDM.printAllLinesCoordinates();
 //      pdfDM.printAllRectanglesCoordinates();
       pdfDM.getOtherRect();
+      pdfDM.printAllLinesCoordinates();
 
       PDFTextWithLocation pdfTWL = new PDFTextWithLocation();
 //      pdfTWL.printAllTextWithLocation();
