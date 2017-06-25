@@ -122,6 +122,7 @@ public class PDFDrawMethods {
       /**
        * if y coordinate is same then horizontal
        * check whether its between y and y+h of rect coordinates
+       * add 15 in y and minus from y+h to remove small cell casses
        * and x1 coordinate should be <=x or <=x-15 (for lines not fully touching edges)
        * and x2 >=x+w or >=x+w-15
        * where 15 is in points , can use smaller points*/
@@ -133,13 +134,14 @@ public class PDFDrawMethods {
           double[]
               src =
               Stream.of(rectanglesCoordinates.get(j)).mapToDouble(Double::doubleValue).toArray();
-          if (slc[1] > src[1] && slc[1] < (
-              src[1] + src[3])) {
+          if (slc[1] > src[1] + 15 && slc[1] < (
+              src[1] + src[3] - 15)) {
             if (slc[0] <= (src[0] + 15) && slc[2] >= (
                 src[0] + src[2] - 15)) {
               System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
               System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
               System.out.println("Found one Horizontal Divider");
+              breakRectHorizontaly(j,slc[1]);
             }
           }
         }
@@ -149,13 +151,14 @@ public class PDFDrawMethods {
           double[]
               src =
               Stream.of(rectanglesCoordinates.get(j)).mapToDouble(Double::doubleValue).toArray();
-          if (slc[0] > src[0] && slc[0] < (
-              src[0] + src[2])) {
+          if (slc[0] > src[0] + 15 && slc[0] < (
+              src[0] + src[2] - 15)) {
             if (slc[1] <= (src[1] + 15) && slc[3] >= (
                 src[1] + src[3] - 15)) {
               System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
               System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
               System.out.println("Found one Vertical Divider");
+              breakRectVertically(j,slc[0]);
             }
           }
 
@@ -167,5 +170,40 @@ public class PDFDrawMethods {
 
 
     }
+  }
+
+  public void breakRectVertically(int index, double x) {
+    /**
+     * from coordinates x1, y1, w, h
+     * make one as x1, y1, |x-x1|, h
+     * and other as x, y1, w-|x-x1|, h*/
+    Double[] d1 = rectanglesCoordinates.get(index);
+    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+    Double[] d2 = new Double[]{x,d1[1],d1[2]-Math.abs(x-d1[0]),d1[3]};
+    d1[2]=Math.abs(x-d1[0]);
+    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+    System.out.println(d2[0]+","+d2[1]+","+d2[2]+","+d2[3]);
+    System.out.println("----------------just found 2 more Veritisep-----------");
+    rectanglesCoordinates.set(index,d1);
+    rectanglesCoordinates.add(d2);
+
+
+  }
+
+  public void breakRectHorizontaly(int index, double y) {
+    /**
+     * from coordinates x1, y1, w, h
+     * make one as x1 y1, w, |y-y1|
+     * and other as x1, y, w, h-|y-y1|*/
+    Double[] d1 = rectanglesCoordinates.get(index);
+    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+    Double[] d2 = new Double[]{d1[0],y,d1[2],d1[3]-Math.abs(y-d1[1])};
+    d1[3]=Math.abs(y-d1[1]);
+    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+    System.out.println(d2[0]+","+d2[1]+","+d2[2]+","+d2[3]);
+    System.out.println("----------------just found 2 more Horisep-----------");
+    rectanglesCoordinates.set(index,d1);
+    rectanglesCoordinates.add(d2);
+
   }
 }
