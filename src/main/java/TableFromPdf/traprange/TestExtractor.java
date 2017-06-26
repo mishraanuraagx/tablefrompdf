@@ -47,12 +47,12 @@ public class TestExtractor {
     PDFTableExtractor extractor = (new PDFTableExtractor())
         .setSource(Application.url);
 
-    int[] i = new int[100];
+    int[] i = new int[150];
     /**
      * only for sample pdf manual extraction*/
     if(Application.url == "assests\\PdfWithTable.pdf"){
-    for(int j=0;j<45;j++){
-      if(j==26 || j==27 || j==25 )continue;
+    for(int j=0;j<50;j++){
+      if(j==25 || j==26 || j==27 || j==28 )continue;
       i[j]=j;
     }}
     extractor.exceptLine(i);

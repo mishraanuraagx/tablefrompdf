@@ -6,7 +6,9 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import TableFromPdf.Application;
 
 public class PDFTextWithLocation {
@@ -24,6 +26,11 @@ public class PDFTextWithLocation {
 
   public PDFTextWithLocation() throws IOException {
     this.getAllTextWithCoordinates();
+  }
+
+  public int uniqueLines(){
+    Set<Double> uniqueLines = new HashSet<Double>(yCoordinates);
+    return uniqueLines.size();
   }
 
   public void getAllTextWithCoordinates() throws IOException {

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 import TableFromPdf.testClasses.PDFCell;
 import TableFromPdf.testClasses.PDFDrawMethods;
+import TableFromPdf.testClasses.PDFTextWithLocation;
 import TableFromPdf.traprange.TraprangeTest;
 
 public class Application {
@@ -63,32 +64,33 @@ public class Application {
 
     TraprangeTest.run();
 
-//    try {
-////      TableFromPdfTest.run();
+    try {
+//      TableFromPdfTest.run();
 //      PDFDrawMethods pdfDM = new PDFDrawMethods();
 //      pdfDM.getAllRectAndLines();
 //      pdfDM.getOtherRect();
 //      pdfDM.formMoreCellsUsingUnUsedLines();
 //      List<PDFCell> pc = pdfDM.createCellsFromRect();
-//
-////      PDFTextWithLocation pdfTWL = new PDFTextWithLocation();
-////      pdfTWL.printAllTextWithLocation();
-////      PDFTextByRegion pdftbr = new PDFTextByRegion();
-////      pdftbr.textByCell(pdfTWL,);
-//
+
+      PDFTextWithLocation pdfTWL = new PDFTextWithLocation();
+      System.out.println(pdfTWL.uniqueLines());
+//      pdfTWL.printAllTextWithLocation();
+//      PDFTextByRegion pdftbr = new PDFTextByRegion();
+//      pdftbr.textByCell(pdfTWL,);
+
 //      int i = 0;
 //      for (PDFCell pdfCell : pc) {
 //        pdfCell.textExtractionWithPosition();
 //        System.out.println(
 //            "---------------------------Text Within Cell : " + i++ + "-------------------------------------");
 //      }
-//
-////      PDFTableGenerator pdft = new PDFTableGenerator();
-////      pdft.setCells(pc);
-////      pdft.buildTable();
-//
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
+
+//      PDFTableGenerator pdft = new PDFTableGenerator();
+//      pdft.setCells(pc);
+//      pdft.buildTable();
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
