@@ -1,6 +1,6 @@
 ## TableFromPDF
 This is an API (in-progress) to Auto-detect and Extract tables from pdf file. Technology used : Apache pdfBox, JAVA.
-Working with Traprange to improve result.
+Working with Traprange to improve result. As of now manual input is required to get desired result.
 
 ## How to use
 Results are in 'assests' folder. A sample pdf file is provided with name 'PdfWithTable'.
@@ -24,6 +24,9 @@ Use Apache pdfBox default method to extract text for a given rectangle coordinat
 
 5. PDFTableGenerator
 Helps in production of Table from merging and combining possible cells into groups
+
+6. TestExtractor
+Use of traprange api to get desired result by manual input.
 
 ## Issue
 1. Need manual input on table start and end lines, need to find a way to automate it
