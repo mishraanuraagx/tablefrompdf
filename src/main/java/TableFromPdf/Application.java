@@ -6,26 +6,26 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.List;
+import java.util.Scanner;
 import TableFromPdf.testClasses.PDFCell;
 import TableFromPdf.testClasses.PDFDrawMethods;
-import TableFromPdf.testClasses.PDFTable;
-import TableFromPdf.testClasses.PDFTextByRegion;
-import TableFromPdf.testClasses.PDFTextWithLocation;
-import TableFromPdf.testClasses.TableFromPdfTest;
 
 public class Application {
   //TODO max : Output text with location within a rectangle
   //TODO max : write sorting methods for PDFDrawMethod class and PDFTextWithLocation
   //TODO max : Write Algorithm to extract table from grouping cells
   //TODO max : See whether removing rectangles is good idea, dispose of bad cells/rectangles
+  //TODO max: needs more abstraction of PDFDrawMethods  class
 
+  /**
+   * url is used to point to file*/
   public static String url = "assests\\PdfWithTable.pdf";
   public static PDFTextStripper stripper;
 
   public static void main(String[] args) {
     java.util.logging.Logger.getLogger("org.apache.pdfbox").setLevel(java.util.logging.Level.OFF);
+
 
     try {
       stripper = new PDFTextStripper() {
@@ -65,28 +65,25 @@ public class Application {
 //      TableFromPdfTest.run();
       PDFDrawMethods pdfDM = new PDFDrawMethods();
       pdfDM.getAllRectAndLines();
-//      pdfDM.printAllRectanglesCoordinates();
       pdfDM.getOtherRect();
-//      pdfDM.printAllRectanglesCoordinates();
-//      pdfDM.printAllLinesCoordinates();
-//      pdfDM.printUnUsedLinesCoordinates();
       pdfDM.formMoreCellsUsingUnUsedLines();
       List<PDFCell> pc = pdfDM.createCellsFromRect();
 
 
-      PDFTextWithLocation pdfTWL = new PDFTextWithLocation();
+//      PDFTextWithLocation pdfTWL = new PDFTextWithLocation();
 //      pdfTWL.printAllTextWithLocation();
-      PDFTextByRegion pdftbr = new PDFTextByRegion();
+//      PDFTextByRegion pdftbr = new PDFTextByRegion();
 //      pdftbr.textByCell(pdfTWL,);
 
 
       for(PDFCell pdfCell : pc){
         pdfCell.textExtractionWithPosition();
-//        pdftbr.textByCell(pdfTWL,pdfCell);
+        System.out.println("----------------------------------------------------------------");
       }
-      PDFTable pdft = new PDFTable();
-      pdft.setCells(pc);
-      pdft.buildTable();
+
+//      PDFTableGenerator pdft = new PDFTableGenerator();
+//      pdft.setCells(pc);
+//      pdft.buildTable();
 
     } catch (IOException e) {
       e.printStackTrace();

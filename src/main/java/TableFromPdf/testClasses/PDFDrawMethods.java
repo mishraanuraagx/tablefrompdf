@@ -158,9 +158,9 @@ public class PDFDrawMethods {
               src[1] + src[3] - minDisBetweenParallelLines)) {
             if (slc[0] <= (src[0] + gap) && slc[2] >= (
                 src[0] + src[2] - gap)) {
-              System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
-              System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
-              System.out.println("Found one Horizontal Divider");
+//              System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
+//              System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
+//              System.out.println("Found one Horizontal Divider");
               breakRectHorizontaly(j,slc[1]);
               lineUsed = true;
             }
@@ -176,9 +176,9 @@ public class PDFDrawMethods {
               src[0] + src[2] - minDisBetweenParallelLines)) {
             if (slc[1] <= (src[1] + gap) && slc[3] >= (
                 src[1] + src[3] - gap)) {
-              System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
-              System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
-              System.out.println("Found one Vertical Divider");
+//              System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
+//              System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
+//              System.out.println("Found one Vertical Divider");
               breakRectVertically(j,slc[0]);
               lineUsed = true;
             }
@@ -186,8 +186,8 @@ public class PDFDrawMethods {
 
         }
       } else {
-        System.out.println("Found a weird line");
-        System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
+//        System.out.println("Found a weird line");
+//        System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
       }
       if(!lineUsed){
         unUsedLinesCoordinates.add(linesCoordinates.get(i));
@@ -206,12 +206,12 @@ public class PDFDrawMethods {
      * make one as x1, y1, |x-x1|, h
      * and other as x, y1, w-|x-x1|, h*/
     Double[] d1 = rectanglesCoordinates.get(index);
-    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+//    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
     Double[] d2 = new Double[]{x,d1[1],d1[2]-Math.abs(x-d1[0]),d1[3]};
     d1[2]=Math.abs(x-d1[0]);
-    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
-    System.out.println(d2[0]+","+d2[1]+","+d2[2]+","+d2[3]);
-    System.out.println("----------------just found 1 more Vertical Separator-----------");
+//    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+//    System.out.println(d2[0]+","+d2[1]+","+d2[2]+","+d2[3]);
+//    System.out.println("----------------just found 1 more Vertical Separator-----------");
     rectanglesCoordinates.set(index,d1);
     rectanglesCoordinates.add(d2);
 
@@ -224,12 +224,12 @@ public class PDFDrawMethods {
      * make one as x1 y1, w, |y-y1|
      * and other as x1, y, w, h-|y-y1|*/
     Double[] d1 = rectanglesCoordinates.get(index);
-    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+//    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
     Double[] d2 = new Double[]{d1[0],y,d1[2],d1[3]-Math.abs(y-d1[1])};
     d1[3]=Math.abs(y-d1[1].doubleValue());
-    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
-    System.out.println(d2[0]+","+d2[1]+","+d2[2]+","+d2[3]);
-    System.out.println("----------------just found 1 more Horizontal Separator-----------");
+//    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+//    System.out.println(d2[0]+","+d2[1]+","+d2[2]+","+d2[3]);
+//    System.out.println("----------------just found 1 more Horizontal Separator-----------");
     rectanglesCoordinates.set(index,d1);
 //    rectanglesCoordinates.add(d1);
     rectanglesCoordinates.add(d2);
@@ -297,7 +297,7 @@ public class PDFDrawMethods {
     pdfdm.setLinesCoordinates(linesCoordinates);
     pdfdm.getOtherRect();
     System.out.println("-------------More rectangles coordinates-----------");
-    pdfdm.printAllRectanglesCoordinates();
+//    pdfdm.printAllRectanglesCoordinates();
     rectanglesCoordinates.addAll(pdfdm.getRectanglesCoordinates());
   }
 

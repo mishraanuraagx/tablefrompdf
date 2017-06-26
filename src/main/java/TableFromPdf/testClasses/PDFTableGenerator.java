@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by MAX on 25-06-2017.
  */
-public class PDFTable {
+public class PDFTableGenerator {
   Map<Integer, List<Integer>> cellIndexesBelow = new HashMap<>();
   List<PDFCell> cells = new ArrayList<>();
   int totalTables = 0;
@@ -23,9 +23,9 @@ public class PDFTable {
 
   public void buildTable() throws IOException {
     Collections.sort(cells, new PDFCell());
-    System.out.println("----cells -----");
+//    System.out.println("----cells -----");
     for (int i = 0; i < cells.size(); i++) {
-      System.out.println(cells.get(i).toString());
+//      System.out.println(cells.get(i).toString());
     }
     for (int i = 0; i < cells.size(); i++) {
       cellsBelow(i);
@@ -107,7 +107,7 @@ public class PDFTable {
         i.add(j);
       }
     }
-    System.out.println(i.size());
+//    System.out.println(i.size());
     cellIndexesBelow.put(index, i);
     return i;
   }

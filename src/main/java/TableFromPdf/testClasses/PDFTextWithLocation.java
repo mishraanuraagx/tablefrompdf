@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 import TableFromPdf.Application;
 
 public class PDFTextWithLocation {
@@ -64,9 +63,7 @@ public class PDFTextWithLocation {
 
   }
 
-  public void sortPosition(){
 
-  }
 
   public void printAllTextWithLocation() {
 

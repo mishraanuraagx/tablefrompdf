@@ -39,36 +39,36 @@ public class PDFCell implements Comparator<PDFCell>{
     double pw = document.getPage(0).getMediaBox().getWidth();
     double ph = document.getPage(0).getMediaBox().getHeight();
 
-    PDFTextStripperByArea stripper = new PDFTextStripperByArea();
-//    {
-//      @Override
-//      protected void startPage(PDPage page) throws IOException
-//      {
-//        startOfLine = true;
-//        super.startPage(page);
-//      }
-//
-//      @Override
-//      protected void writeLineSeparator() throws IOException
-//      {
-//        startOfLine = true;
-//        super.writeLineSeparator();
-//      }
-//
-//      @Override
-//      protected void writeString(String text, List<TextPosition> textPositions) throws IOException
-//      {
-//        if (startOfLine)
-//        {
-//          TextPosition firstPosition = textPositions.get(0);
-//
-//          writeString(String.format("[%s , %s]", firstPosition.getXDirAdj(), firstPosition.getYDirAdj()));
-//          startOfLine = false;
-//        }
-//        super.writeString(text, textPositions);
-//      }
-//      boolean startOfLine = true;
-//    };
+    PDFTextStripperByArea stripper = new PDFTextStripperByArea()
+    {
+      @Override
+      protected void startPage(PDPage page) throws IOException
+      {
+        startOfLine = true;
+        super.startPage(page);
+      }
+
+      @Override
+      protected void writeLineSeparator() throws IOException
+      {
+        startOfLine = true;
+        super.writeLineSeparator();
+      }
+
+      @Override
+      protected void writeString(String text, List<TextPosition> textPositions) throws IOException
+      {
+        if (startOfLine)
+        {
+          TextPosition firstPosition = textPositions.get(0);
+
+          writeString(String.format("[%s , %s]", firstPosition.getXDirAdj(), firstPosition.getYDirAdj()));
+          startOfLine = false;
+        }
+        super.writeString(text, textPositions);
+      }
+      boolean startOfLine = true;
+    };
 
     Rectangle2D region = new Rectangle2D.Double(x,y, w, h);
     String regionName = "region";
