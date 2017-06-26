@@ -10,6 +10,7 @@ import java.io.StringWriter;
 import java.util.List;
 import TableFromPdf.testClasses.PDFCell;
 import TableFromPdf.testClasses.PDFDrawMethods;
+import TableFromPdf.testClasses.PDFTable;
 import TableFromPdf.testClasses.PDFTextByRegion;
 import TableFromPdf.testClasses.PDFTextWithLocation;
 import TableFromPdf.testClasses.TableFromPdfTest;
@@ -17,7 +18,7 @@ import TableFromPdf.testClasses.TableFromPdfTest;
 public class Application {
   //TODO max : Output text with location within a rectangle
   //TODO max : write sorting methods for PDFDrawMethod class and PDFTextWithLocation
-  //TODO max : Write Algo to extract table from grouping cells
+  //TODO max : Write Algorithm to extract table from grouping cells
   //TODO max : See whether removing rectangles is good idea, dispose of bad cells/rectangles
 
   public static String url = "assests\\PdfWithTable.pdf";
@@ -83,6 +84,9 @@ public class Application {
         pdfCell.textExtractionWithPosition();
 //        pdftbr.textByCell(pdfTWL,pdfCell);
       }
+      PDFTable pdft = new PDFTable();
+      pdft.setCells(pc);
+      pdft.buildTable();
 
     } catch (IOException e) {
       e.printStackTrace();
