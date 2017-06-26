@@ -56,7 +56,7 @@ public class PDFTableGeneratorHelper {
         if(value == noOfLinesPerGap.get(i).intValue()){
           count++;
         } else if(count>=2){
-          temp = new Integer[]{start,count};
+          temp = new Integer[]{start,count+2};
           tableStartFinishLines.add(temp);
           count=0;start=0;value=-1;onGoing=false;
           if(noOfLinesPerGap.get(i)>=2){

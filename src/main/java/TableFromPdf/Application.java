@@ -20,14 +20,12 @@ import TableFromPdf.traprange.TraprangeTest;
 public class Application {
   //TODO max : Output text with location within a rectangle
   //TODO max : write sorting methods for PDFDrawMethod class and PDFTextWithLocation
-  //TODO max : Write Algorithm to extract table from grouping cells
-  //TODO max : See whether removing rectangles is good idea, dispose of bad cells/rectangles
-  //TODO max: needs more abstraction of PDFDrawMethods  class
+  //TODO max : needs more abstraction of PDFDrawMethods  class
 
   /**
    * url is used to point to file
    */
-  public static String url = "assests\\sample1.pdf";
+  public static String url = "assests\\PdfWithTable.pdf";
   public static PDFTextStripper stripper;
   public static int minFontSize = 0;
   public static int maxFontSize = 0;
