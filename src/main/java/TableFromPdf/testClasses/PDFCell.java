@@ -31,6 +31,8 @@ public class PDFCell {
   public void textExtractionWithPosition() throws IOException{
     File file = new File("assests\\PdfWithTable.pdf");
     PDDocument document = PDDocument.load(file);
+    double pw = document.getPage(0).getMediaBox().getWidth();
+    double ph = document.getPage(0).getMediaBox().getHeight();
     String text;
     PDFTextStripperByArea stripper = new PDFTextStripperByArea()
     {
@@ -69,6 +71,7 @@ public class PDFCell {
     stripper.addRegion(regionName, region);
     stripper.extractRegions(document.getPage(0));
     text = stripper.getTextForRegion(regionName);
+    System.out.println(this.getX()+","+this.getY()+","+this.getW()+","+this.getH());
     System.out.println(text);
     System.out.println("------------------------------------------");
 

@@ -8,15 +8,16 @@ import org.apache.pdfbox.text.TextPosition;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
+import TableFromPdf.testClasses.PDFCell;
 import TableFromPdf.testClasses.PDFDrawMethods;
+import TableFromPdf.testClasses.PDFTextByRegion;
 import TableFromPdf.testClasses.PDFTextWithLocation;
 import TableFromPdf.testClasses.TableFromPdfTest;
 
 public class Application {
-
+  //TODO max : Output text with location within a rectangle
   //TODO max : write sorting methods for PDFDrawMethod class and PDFTextWithLocation
   //TODO max : Write Algo to extract table from grouping cells
-  //TODO max : Try to figure out more cells using left over lines coordinates
   //TODO max : See whether removing rectangles is good idea, dispose of bad cells/rectangles
 
   public static String url = "assests\\PdfWithTable.pdf";
@@ -63,13 +64,26 @@ public class Application {
 //      TableFromPdfTest.run();
       PDFDrawMethods pdfDM = new PDFDrawMethods();
       pdfDM.getAllRectAndLines();
-//      pdfDM.printAllLinesCoordinates();
 //      pdfDM.printAllRectanglesCoordinates();
       pdfDM.getOtherRect();
-      pdfDM.printAllLinesCoordinates();
+//      pdfDM.printAllRectanglesCoordinates();
+//      pdfDM.printAllLinesCoordinates();
+//      pdfDM.printUnUsedLinesCoordinates();
+      pdfDM.formMoreCellsUsingUnUsedLines();
+      List<PDFCell> pc = pdfDM.createCellsFromRect();
+
 
       PDFTextWithLocation pdfTWL = new PDFTextWithLocation();
 //      pdfTWL.printAllTextWithLocation();
+      PDFTextByRegion pdftbr = new PDFTextByRegion();
+//      pdftbr.textByCell(pdfTWL,);
+
+
+      for(PDFCell pdfCell : pc){
+        pdfCell.textExtractionWithPosition();
+//        pdftbr.textByCell(pdfTWL,pdfCell);
+      }
+
     } catch (IOException e) {
       e.printStackTrace();
     }

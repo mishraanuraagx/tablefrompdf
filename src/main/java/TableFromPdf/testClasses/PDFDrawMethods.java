@@ -3,6 +3,8 @@ package TableFromPdf.testClasses;
 
 import com.sun.deploy.util.ArrayUtil;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,13 +21,19 @@ import TableFromPdf.Application;
 //TODO max: check remaining left over lines and reason why they don't fit the condition for separating the rectangles
 public class PDFDrawMethods {
   public List<Double[]> rectanglesCoordinates = new ArrayList<Double[]>();
+  public List<Double[]> newRectanglesCoordinates = new ArrayList<Double[]>();
   public Double[] singleRectCoordinates;
   public List<Double[]> linesCoordinates = new ArrayList<Double[]>();
+  public List<Double[]> unUsedLinesCoordinates = new ArrayList<Double[]>();
   public Double[] singleLineCoordinates;
 
   public void getAllRectAndLines() throws IOException {
     // Output all drawing instruction for Rectangles
     File file = new File(Application.url);
+    PDDocument document = PDDocument.load(file);
+    double pw = document.getPage(0).getMediaBox().getWidth();
+    double ph = document.getPage(0).getMediaBox().getHeight();
+
     List<PDFCell> pdfCells = new ArrayList<>();
     BufferedReader br = new BufferedReader(new FileReader(file));
 
@@ -40,10 +48,12 @@ public class PDFDrawMethods {
         if (currentLine.contains(" l ")) {
           singleLineCoordinates = new Double[4];
           singleLineCoordinates[0] = sc.nextDouble();
+//          singleLineCoordinates[1] = Math.abs(ph-sc.nextDouble());
           singleLineCoordinates[1] = sc.nextDouble();
           // TODO max: faulty way to skip 'm' char on draw method for a line
           sc.next();
           singleLineCoordinates[2] = sc.nextDouble();
+//          singleLineCoordinates[3] = Math.abs(ph-sc.nextDouble());
           singleLineCoordinates[3] = sc.nextDouble();
           //TODO max: fix, make smaller coordinate values store in first 2
           if (singleLineCoordinates[0].doubleValue() == singleLineCoordinates[2].doubleValue()
@@ -99,6 +109,15 @@ public class PDFDrawMethods {
       System.out.println(d[0] + "," + d[1] + "," + d[2] + "," + d[3]);
     }
   }
+  public void printUnUsedLinesCoordinates() {
+    int size = unUsedLinesCoordinates.size();
+    System.out
+        .println("--------------------Printing All Unused Lines Coordinates----------------------------");
+    for (int i = 0; i < size; i++) {
+      Double[] d = unUsedLinesCoordinates.get(i);
+      System.out.println(d[0] + "," + d[1] + "," + d[2] + "," + d[3]);
+    }
+  }
 
 
   //TODO max: many cases are not included like rect created by only lines
@@ -109,8 +128,8 @@ public class PDFDrawMethods {
 
 
   public void getOtherRect() {
-    int gap = 15;
-    int minDisBetweenParallelLines = 15;
+    int gap = 5;
+    int minDisBetweenParallelLines = 10;
     System.out.println(
         "--------------------Figuring out All Rectangles created by lines intersecting with rect----------------------------");
 
@@ -139,9 +158,9 @@ public class PDFDrawMethods {
               src[1] + src[3] - minDisBetweenParallelLines)) {
             if (slc[0] <= (src[0] + gap) && slc[2] >= (
                 src[0] + src[2] - gap)) {
-//              System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
-//              System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
-//              System.out.println("Found one Horizontal Divider");
+              System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
+              System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
+              System.out.println("Found one Horizontal Divider");
               breakRectHorizontaly(j,slc[1]);
               lineUsed = true;
             }
@@ -157,9 +176,9 @@ public class PDFDrawMethods {
               src[0] + src[2] - minDisBetweenParallelLines)) {
             if (slc[1] <= (src[1] + gap) && slc[3] >= (
                 src[1] + src[3] - gap)) {
-//              System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
-//              System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
-//              System.out.println("Found one Vertical Divider");
+              System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
+              System.out.println(src[0] + "," + src[1] + "," + src[2] + "," + src[3]);
+              System.out.println("Found one Vertical Divider");
               breakRectVertically(j,slc[0]);
               lineUsed = true;
             }
@@ -170,7 +189,8 @@ public class PDFDrawMethods {
         System.out.println("Found a weird line");
         System.out.println(slc[0] + "," + slc[1] + "," + slc[2] + "," + slc[3]);
       }
-      if(lineUsed){
+      if(!lineUsed){
+        unUsedLinesCoordinates.add(linesCoordinates.get(i));
         linesCoordinates.remove(i);
         sizeLC--;
         i--;
@@ -186,11 +206,11 @@ public class PDFDrawMethods {
      * make one as x1, y1, |x-x1|, h
      * and other as x, y1, w-|x-x1|, h*/
     Double[] d1 = rectanglesCoordinates.get(index);
-//    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
     Double[] d2 = new Double[]{x,d1[1],d1[2]-Math.abs(x-d1[0]),d1[3]};
     d1[2]=Math.abs(x-d1[0]);
-//    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
-//    System.out.println(d2[0]+","+d2[1]+","+d2[2]+","+d2[3]);
+    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+    System.out.println(d2[0]+","+d2[1]+","+d2[2]+","+d2[3]);
     System.out.println("----------------just found 1 more Vertical Separator-----------");
     rectanglesCoordinates.set(index,d1);
     rectanglesCoordinates.add(d2);
@@ -204,14 +224,121 @@ public class PDFDrawMethods {
      * make one as x1 y1, w, |y-y1|
      * and other as x1, y, w, h-|y-y1|*/
     Double[] d1 = rectanglesCoordinates.get(index);
-//    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
     Double[] d2 = new Double[]{d1[0],y,d1[2],d1[3]-Math.abs(y-d1[1])};
-    d1[3]=Math.abs(y-d1[1]);
-//    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
-//    System.out.println(d2[0]+","+d2[1]+","+d2[2]+","+d2[3]);
-    System.out.println("----------------just found 2 more Horizontal Separator-----------");
+    d1[3]=Math.abs(y-d1[1].doubleValue());
+    System.out.println(d1[0]+","+d1[1]+","+d1[2]+","+d1[3]);
+    System.out.println(d2[0]+","+d2[1]+","+d2[2]+","+d2[3]);
+    System.out.println("----------------just found 1 more Horizontal Separator-----------");
     rectanglesCoordinates.set(index,d1);
+//    rectanglesCoordinates.add(d1);
     rectanglesCoordinates.add(d2);
 
   }
+
+  public List<PDFCell> createCellsFromRect(){
+    List<PDFCell> cells = new ArrayList<>();
+    int sizeRC = rectanglesCoordinates.size();
+    for(int i=0;i<sizeRC;i++){
+      Double[] d = rectanglesCoordinates.get(i);
+      PDFCell pc = new PDFCell(d[0].doubleValue(),d[1].doubleValue(),d[2].doubleValue(),d[3].doubleValue());
+      cells.add(pc);
+    }
+    return cells;
+  }
+
+  public void formMoreCellsUsingUnUsedLines(){
+    PDFDrawMethods pdfdm = new PDFDrawMethods();
+    int size = unUsedLinesCoordinates.size();
+    for(int i=0;i<size;i++){
+      Double[] d1 = unUsedLinesCoordinates.get(i);
+      for(int j=i;j<size;j++){
+        Double[] d2 = unUsedLinesCoordinates.get(j);
+        if(d1[0].doubleValue()==d1[2].doubleValue() && d2[0].doubleValue()==d2[2].doubleValue()){
+          if(Math.abs(d1[1]-d2[1])<10 && Math.abs(d1[3]-d2[3])<10){
+            singleRectCoordinates = new Double[4];
+            if(d1[0].doubleValue()<d2[0].doubleValue()){
+              singleRectCoordinates[0]=d1[0].doubleValue();
+              singleRectCoordinates[1]=d1[1].doubleValue();
+              singleRectCoordinates[2]=Math.abs(d2[0].doubleValue()-d1[0].doubleValue());
+              singleRectCoordinates[3]=Math.abs(d1[3].doubleValue()-d1[1].doubleValue());
+              newRectanglesCoordinates.add(singleRectCoordinates);
+            }else {
+              singleRectCoordinates[0]=d2[0].doubleValue();
+              singleRectCoordinates[1]=d2[1].doubleValue();
+              singleRectCoordinates[2]=Math.abs(d2[0].doubleValue()-d1[0].doubleValue());
+              singleRectCoordinates[3]=Math.abs(d2[3].doubleValue()-d2[1].doubleValue());
+              newRectanglesCoordinates.add(singleRectCoordinates);
+
+            }
+          }
+        }else if(d1[1].doubleValue()==d1[3].doubleValue() && d2[1].doubleValue()==d2[3].doubleValue()){
+          if(Math.abs(d1[0]-d2[0])<10 && Math.abs(d1[2]-d2[2])<10){
+            singleRectCoordinates = new Double[4];
+            if(d1[1].doubleValue()<d2[1].doubleValue()){
+              singleRectCoordinates[0]=d1[0].doubleValue();
+              singleRectCoordinates[1]=d1[1].doubleValue();
+              singleRectCoordinates[2]=Math.abs(d1[0].doubleValue()-d1[2].doubleValue());
+              singleRectCoordinates[3]=Math.abs(d2[1].doubleValue()-d1[1].doubleValue());
+              newRectanglesCoordinates.add(singleRectCoordinates);
+            }else {
+              singleRectCoordinates[0]=d2[0].doubleValue();
+              singleRectCoordinates[1]=d2[1].doubleValue();
+              singleRectCoordinates[2]=Math.abs(d2[0].doubleValue()-d2[2].doubleValue());
+              singleRectCoordinates[3]=Math.abs(d2[1].doubleValue()-d1[1].doubleValue());
+              newRectanglesCoordinates.add(singleRectCoordinates);
+
+            }
+          }
+        }
+      }
+    }
+    pdfdm.setRectanglesCoordinates(newRectanglesCoordinates);
+    pdfdm.setLinesCoordinates(linesCoordinates);
+    pdfdm.getOtherRect();
+    System.out.println("-------------More rectangles coordinates-----------");
+    pdfdm.printAllRectanglesCoordinates();
+    rectanglesCoordinates.addAll(pdfdm.getRectanglesCoordinates());
+  }
+
+  public List<Double[]> getRectanglesCoordinates() {
+    return rectanglesCoordinates;
+  }
+
+  public void setRectanglesCoordinates(List<Double[]> rectanglesCoordinates) {
+    this.rectanglesCoordinates = rectanglesCoordinates;
+  }
+
+  public Double[] getSingleRectCoordinates() {
+    return singleRectCoordinates;
+  }
+
+  public void setSingleRectCoordinates(Double[] singleRectCoordinates) {
+    this.singleRectCoordinates = singleRectCoordinates;
+  }
+
+  public List<Double[]> getLinesCoordinates() {
+    return linesCoordinates;
+  }
+
+  public void setLinesCoordinates(List<Double[]> linesCoordinates) {
+    this.linesCoordinates = linesCoordinates;
+  }
+
+  public List<Double[]> getUnUsedLinesCoordinates() {
+    return unUsedLinesCoordinates;
+  }
+
+  public void setUnUsedLinesCoordinates(List<Double[]> unUsedLinesCoordinates) {
+    this.unUsedLinesCoordinates = unUsedLinesCoordinates;
+  }
+
+  public Double[] getSingleLineCoordinates() {
+    return singleLineCoordinates;
+  }
+
+  public void setSingleLineCoordinates(Double[] singleLineCoordinates) {
+    this.singleLineCoordinates = singleLineCoordinates;
+  }
+
 }

@@ -65,9 +65,10 @@ public class PDFTextByRegion{
   
   public void textByCell(PDFTextWithLocation pdftwl,PDFCell pdfCell){
     int a=0;
-
+    System.out.println("---------cell----------");
+    System.out.println(pdfCell.getX()+","+pdfCell.getY()+","+pdfCell.getW()+","+pdfCell.getH());
         for(String str : pdftwl.getTextList()){
-          if(pdftwl.getxCoordinates().get(a)>pdfCell.getX() && pdftwl.getxCoordinates().get(a)<=(pdfCell.getX()+pdfCell.getW())
+          if(pdftwl.getxCoordinates().get(a)>=pdfCell.getX() && pdftwl.getxCoordinates().get(a)<=(pdfCell.getX()+pdfCell.getW())
               && pdftwl.getyCoordinates().get(a)>pdfCell.getY() && pdftwl.getyCoordinates().get(a)<=(pdfCell.getY()+pdfCell.getH())){
 
             System.out.println(pdftwl.getxCoordinates().get(a)+","+pdftwl.getyCoordinates().get(a)+","+pdftwl.getTextList().get(a));
