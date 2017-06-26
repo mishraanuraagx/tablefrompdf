@@ -1,17 +1,13 @@
-package TableFromPdf.testClasses;
+package TableFromPdf.pdfMethods;
 
-
-import com.sun.deploy.util.ArrayUtil;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;

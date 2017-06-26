@@ -7,10 +7,7 @@ import org.apache.pdfbox.text.TextPosition;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
-import TableFromPdf.testClasses.PDFCell;
-import TableFromPdf.testClasses.PDFDrawMethods;
-import TableFromPdf.testClasses.PDFTextWithLocation;
+import TableFromPdf.pdfMethods.PDFTextWithLocation;
 import TableFromPdf.traprange.TraprangeTest;
 
 public class Application {
@@ -25,6 +22,7 @@ public class Application {
    */
   public static String url = "assests\\PdfWithTable.pdf";
   public static PDFTextStripper stripper;
+  public static int minFontSize = 0;
 
   public static void main(String[] args) throws IOException {
     java.util.logging.Logger.getLogger("org.apache.pdfbox").setLevel(java.util.logging.Level.OFF);
@@ -50,7 +48,8 @@ public class Application {
             TextPosition firstPosition = textPositions.get(0);
 
             writeString(
-                String.format("%s,%s,", firstPosition.getXDirAdj(), firstPosition.getYDirAdj()));
+                String.format("%s,%s,%s,", firstPosition.getXDirAdj(), firstPosition.getYDirAdj(),
+                    firstPosition.getFontSize()));
             startOfLine = false;
           }
           super.writeString(text, textPositions);
@@ -73,7 +72,9 @@ public class Application {
 //      List<PDFCell> pc = pdfDM.createCellsFromRect();
 
       PDFTextWithLocation pdfTWL = new PDFTextWithLocation();
-      System.out.println(pdfTWL.uniqueLines());
+      System.out.println("Totla no. of unique lines : " + pdfTWL.uniqueLines());
+      minFontSize = pdfTWL.minHieght();
+      System.out.println("minimum font-size : " + minFontSize);
 //      pdfTWL.printAllTextWithLocation();
 //      PDFTextByRegion pdftbr = new PDFTextByRegion();
 //      pdftbr.textByCell(pdfTWL,);

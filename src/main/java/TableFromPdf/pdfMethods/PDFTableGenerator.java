@@ -1,4 +1,4 @@
-package TableFromPdf.testClasses;
+package TableFromPdf.pdfMethods;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -154,5 +154,9 @@ public class PDFTableGenerator {
 
   public void setOneRectIndexes(List<Integer> oneRectIndexes) {
     this.oneRectIndexes = oneRectIndexes;
+  }
+
+  public void boundingLines(){
+
   }
 }

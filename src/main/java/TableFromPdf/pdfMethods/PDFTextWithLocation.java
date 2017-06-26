@@ -1,4 +1,4 @@
-package TableFromPdf.testClasses;
+package TableFromPdf.pdfMethods;
 
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -6,7 +6,9 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import TableFromPdf.Application;
@@ -14,6 +16,7 @@ import TableFromPdf.Application;
 public class PDFTextWithLocation {
   public List<Double> xCoordinates = new ArrayList<>();
   public List<Double> yCoordinates = new ArrayList<>();
+  public List<Double> fonts = new ArrayList<>();
   public List<String> textList = new ArrayList<>();
   public String text;
 
@@ -28,8 +31,28 @@ public class PDFTextWithLocation {
     this.getAllTextWithCoordinates();
   }
 
+  public int minHieght(){
+    Double min = Collections.min(fonts);
+    return (int)min.doubleValue();
+  }
+
   public int uniqueLines(){
     Set<Double> uniqueLines = new HashSet<Double>(yCoordinates);
+    int i=0,j=0;
+    Iterator<Double> d = uniqueLines.iterator();
+    for (;i<uniqueLines.size()/2-1;i++){
+      if(d.hasNext()){
+        Double ul1 = d.next();
+        if(d.hasNext()){
+          Double ul2 = d.next();
+          if(Math.abs(ul1.doubleValue()-ul2.doubleValue()) > Application.minFontSize*2){
+            j++;
+          }
+        }
+        else break;
+      } else break;
+    }
+    System.out.println("No. of uniques lines which maintain same gap as minimum font-Size : "+j);
     return uniqueLines.size();
   }
 
@@ -45,7 +68,8 @@ public class PDFTextWithLocation {
         String[] str2 = str.split(",");
         xCoordinates.add(Double.parseDouble(str2[0]));
         yCoordinates.add(Double.parseDouble(str2[1]));
-        textList.add(str2[2]);
+        fonts.add(Double.parseDouble(str2[2]));
+        textList.add(str2[3]);
 //        double d1 = Double.parseDouble(str2[0]);
 //        double d2 = Double.parseDouble(str2[1]);
 //        String text = str2[2];

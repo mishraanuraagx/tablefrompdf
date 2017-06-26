@@ -1,16 +1,14 @@
-package TableFromPdf.testClasses;
+package TableFromPdf.pdfMethods;
 
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.apache.pdfbox.text.TextPosition;
 
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.Comparator;
 import java.util.List;
 
