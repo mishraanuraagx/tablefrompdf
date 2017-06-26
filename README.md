@@ -1,6 +1,11 @@
 ## TableFromPDF
 This is an API (in-progress) to Auto-detect and Extract tables from pdf file. Technology used : Apache pdfBox, JAVA.
+Working with Traprange to improve result.
 
+## How to use
+Results are in 'assests' folder. A sample pdf file is provided with name 'PdfWithTable'.
+Output files are 'ToHTML.html' contains output in HTML table format and 'toCSV.csv' in csv format.
+Change 'url' variable in main function in Application class for file located at different source.
 
 ## Classes
 1. PDFDrawMethods
