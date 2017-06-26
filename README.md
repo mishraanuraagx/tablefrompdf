@@ -26,8 +26,7 @@ Use Apache pdfBox default method to extract text for a given rectangle coordinat
 Helps in production of Table from merging and combining possible cells into groups
 
 ## Issue
-1. Need to use better cell detection algorithm, converting pdf without text to png and using some line detection algorithm might solve this problem
-2. PDFTableGenerator is still in-progress, runtime of this class is too high, doesn't even work properly.
+1. Need manual input on table start and end lines, need to find a way to automate it
 
 ## Other online Solution
 1. Tabula : http://tabula.technology/
