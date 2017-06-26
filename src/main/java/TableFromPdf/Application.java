@@ -27,7 +27,7 @@ public class Application {
   /**
    * url is used to point to file
    */
-  public static String url = "assests\\PdfWithTable.pdf";
+  public static String url = "assests\\sample1.pdf";
   public static PDFTextStripper stripper;
   public static int minFontSize = 0;
   public static int maxFontSize = 0;

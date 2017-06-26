@@ -1,6 +1,6 @@
 ## TableFromPDF
 This is an API (in-progress) to Auto-detect and Extract tables from pdf file. Technology used : Apache pdfBox, JAVA.
-Working with Traprange to improve result. As of now manual input is required to get desired result.
+Working with Traprange to improve result. As of now Auto detection may or may not work input is required to get desired result.
 
 ## How to use
 Results are in 'assests' folder. A sample pdf file is provided with name 'PdfWithTable'.
@@ -30,7 +30,8 @@ Helps in production of Table from merging and combining possible cells into grou
 Use of traprange api to get desired result by manual input.
 
 ## Issue
-1. Need manual input on table start and end lines, need to find a way to automate it
+1. Auto detection works, still need more clean & sophisticated approach.
+2. Works only for those pdf files which are readable if opened in notepad.
 
 ## Other online Solution
 1. Tabula : http://tabula.technology/

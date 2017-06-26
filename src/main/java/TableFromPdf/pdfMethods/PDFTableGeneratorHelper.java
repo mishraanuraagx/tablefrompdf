@@ -35,7 +35,7 @@ public class PDFTableGeneratorHelper {
           n++;
         }
       }
-      System.out.println(i-1 + " : " + n);
+//      System.out.println(i-1 + " : " + n);
       noOfLinesPerGap.add(i-1,n);
     }
 
@@ -78,8 +78,8 @@ public class PDFTableGeneratorHelper {
       }
 
     }
-    for(Integer[] i : tableStartFinishLines){
-    System.out.println(i[0]+" : " + i[1]);}
+//    for(Integer[] i : tableStartFinishLines){
+//    System.out.println(i[0]+" : " + i[1]);}
 
   }
 

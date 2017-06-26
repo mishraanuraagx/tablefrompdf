@@ -78,6 +78,7 @@ public class TestExtractor {
 
         writer.write("Page: " + (table.getPageIdx() + 1) + "\n");
         writer.write(table.toHtml());
+        totalfiles++;
 
       }
       try (Writer writer = new OutputStreamWriter(new FileOutputStream("assests\\toCSV"+name+".csv"),
@@ -85,11 +86,9 @@ public class TestExtractor {
 
         writer.write("Page: " + (table.getPageIdx() + 1) + "\n");
         writer.write(table.toString());
-        totalfiles++;
       }
       name++;
       System.arraycopy( i1, 0, i2, 0, i1.length );
-      totalfiles++;
     }
 
 
