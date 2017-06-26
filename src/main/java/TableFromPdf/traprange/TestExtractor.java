@@ -46,7 +46,15 @@ public class TestExtractor {
 //    for (int idx = 0; idx < 5; idx++) {
     PDFTableExtractor extractor = (new PDFTableExtractor())
         .setSource(Application.url);
-    int[] i = {};
+
+    int[] i = new int[100];
+    /**
+     * only for sample pdf manual extraction*/
+    if(Application.url == "assests\\PdfWithTable.pdf"){
+    for(int j=0;j<45;j++){
+      if(j==26 || j==27 || j==25 )continue;
+      i[j]=j;
+    }}
     extractor.exceptLine(i);
 
     Table table = extractor.extract().get(0);
@@ -59,7 +67,6 @@ public class TestExtractor {
     }
     try (Writer writer = new OutputStreamWriter(new FileOutputStream("assests\\toCSV.csv"),
         "UTF-8")) {
-        /*for (Table table : table)*/
 
       writer.write("Page: " + (table.getPageIdx() + 1) + "\n");
       writer.write(table.toString());
