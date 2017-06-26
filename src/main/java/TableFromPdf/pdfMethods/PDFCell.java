@@ -9,6 +9,7 @@ import org.apache.pdfbox.text.TextPosition;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -78,6 +79,8 @@ public class PDFCell implements Comparator<PDFCell>{
     System.out.println(text);
 
   }
+
+
 
   public double getX() {
     return x;

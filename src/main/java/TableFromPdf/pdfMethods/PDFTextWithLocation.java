@@ -53,6 +53,7 @@ public class PDFTextWithLocation {
       } else break;
     }
     System.out.println("No. of uniques lines which maintain same gap as minimum font-Size : "+j);
+    Application.uniqueDefLines=j;
     return uniqueLines.size();
   }
 

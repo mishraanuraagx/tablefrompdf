@@ -51,7 +51,7 @@ public class TestExtractor {
     /**
      * only for sample pdf manual extraction*/
     if(Application.url == "assests\\PdfWithTable.pdf"){
-    for(int j=0;j<48;j++){
+    for(int j=0;j<Application.uniqueDefLines;j++){
       if(j==25 || j==26 || j==27 || j==28 )continue;
       i[j]=j;
     }}

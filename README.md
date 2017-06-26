@@ -6,6 +6,7 @@ Working with Traprange to improve result. As of now manual input is required to 
 Results are in 'assests' folder. A sample pdf file is provided with name 'PdfWithTable'.
 Output files are 'ToHTML.html' contains output in HTML table format and 'toCSV.csv' in csv format.
 Change 'url' variable in main function in Application class for file located at different source.
+'ToHTML.html' will automatically open in your default browser when code runs successfully.
 
 ## Classes
 1. PDFDrawMethods

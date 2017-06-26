@@ -7,10 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by MAX on 25-06-2017.
- */
-public class PDFTableGenerator {
+
+public class PDFTableGeneratorHelper {
   Map<Integer, List<Integer>> cellIndexesBelow = new HashMap<>();
   List<PDFCell> cells = new ArrayList<>();
   int totalTables = 0;
@@ -20,6 +18,28 @@ public class PDFTableGenerator {
 
   List<Integer[]> allRectIndexes;
   List<Integer> oneRectIndexes;
+
+  public int uniqueRect() {
+    int j;
+
+    List<Integer> indexes;
+    for (int k = 0; k < cells.size(); k++) {
+      indexes = new ArrayList<>();
+      PDFCell cell1 = cells.get(k);
+      for (int i = k; i < cells.size(); i++) {
+        PDFCell cell2 = cells.get(i);
+        if (Math.abs(cell1.getX()-cell2.getX())<2 && Math.abs(cell1.getY()-cell2.getY())<2
+            && Math.abs(cell1.getH()*cell1.getW() - cell2.getH()*cell2.getW())<1){
+          indexes.add(k);
+        }
+      }
+      for (int i=0;i<indexes.size();i++){
+        cells.remove(indexes.get(i).intValue());
+      }
+    }
+    j=cells.size();
+    return j;
+  }
 
   public void buildTable() throws IOException {
     Collections.sort(cells, new PDFCell());
@@ -156,7 +176,7 @@ public class PDFTableGenerator {
     this.oneRectIndexes = oneRectIndexes;
   }
 
-  public void boundingLines(){
+  public void boundingLines() {
 
   }
 }

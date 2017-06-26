@@ -5,9 +5,15 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import TableFromPdf.pdfMethods.PDFCell;
+import TableFromPdf.pdfMethods.PDFDrawMethods;
+import TableFromPdf.pdfMethods.PDFTableGeneratorHelper;
 import TableFromPdf.pdfMethods.PDFTextWithLocation;
+import TableFromPdf.pdfMethods.TableFromPdfTest;
 import TableFromPdf.traprange.TraprangeTest;
 
 public class Application {
@@ -23,6 +29,7 @@ public class Application {
   public static String url = "assests\\PdfWithTable.pdf";
   public static PDFTextStripper stripper;
   public static int minFontSize = 0;
+  public static int uniqueDefLines = 0;
 
   public static void main(String[] args) throws IOException {
     java.util.logging.Logger.getLogger("org.apache.pdfbox").setLevel(java.util.logging.Level.OFF);
@@ -61,20 +68,22 @@ public class Application {
       System.out.println(ioe.toString());
     }
 
-    TraprangeTest.run();
 
     try {
 //      TableFromPdfTest.run();
-//      PDFDrawMethods pdfDM = new PDFDrawMethods();
-//      pdfDM.getAllRectAndLines();
-//      pdfDM.getOtherRect();
-//      pdfDM.formMoreCellsUsingUnUsedLines();
-//      List<PDFCell> pc = pdfDM.createCellsFromRect();
 
+      PDFDrawMethods pdfDM = new PDFDrawMethods();
+      pdfDM.getAllRectAndLines();
+      pdfDM.getOtherRect();
+      pdfDM.formMoreCellsUsingUnUsedLines();
+      List<PDFCell> pc = pdfDM.createCellsFromRect();
+//
       PDFTextWithLocation pdfTWL = new PDFTextWithLocation();
       System.out.println("Totla no. of unique lines : " + pdfTWL.uniqueLines());
       minFontSize = pdfTWL.minHieght();
       System.out.println("minimum font-size : " + minFontSize);
+
+
 //      pdfTWL.printAllTextWithLocation();
 //      PDFTextByRegion pdftbr = new PDFTextByRegion();
 //      pdftbr.textByCell(pdfTWL,);
@@ -85,13 +94,20 @@ public class Application {
 //        System.out.println(
 //            "---------------------------Text Within Cell : " + i++ + "-------------------------------------");
 //      }
-
-//      PDFTableGenerator pdft = new PDFTableGenerator();
-//      pdft.setCells(pc);
+//
+      PDFTableGeneratorHelper pdft = new PDFTableGeneratorHelper();
+      pdft.setCells(pc);
+      System.out.println("unique rectangles : "+pdft.uniqueRect());
 //      pdft.buildTable();
 
-    } catch (IOException e) {
+      TraprangeTest.run();
+
+      File htmlFile = new File("assests\\ToHTML.html");
+      Desktop.getDesktop().browse(htmlFile.toURI());
+    } catch (Exception e) {
       e.printStackTrace();
     }
+
+
   }
 }
