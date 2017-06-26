@@ -14,6 +14,7 @@ import TableFromPdf.pdfMethods.PDFDrawMethods;
 import TableFromPdf.pdfMethods.PDFTableGeneratorHelper;
 import TableFromPdf.pdfMethods.PDFTextWithLocation;
 import TableFromPdf.pdfMethods.TableFromPdfTest;
+import TableFromPdf.traprange.TestExtractor;
 import TableFromPdf.traprange.TraprangeTest;
 
 public class Application {
@@ -29,9 +30,11 @@ public class Application {
   public static String url = "assests\\PdfWithTable.pdf";
   public static PDFTextStripper stripper;
   public static int minFontSize = 0;
+  public static int maxFontSize = 0;
   public static int uniqueDefLines = 0;
 
   public static void main(String[] args) throws IOException {
+    org.apache.log4j.BasicConfigurator.configure();
     java.util.logging.Logger.getLogger("org.apache.pdfbox").setLevel(java.util.logging.Level.OFF);
 
     try {
@@ -79,8 +82,9 @@ public class Application {
       List<PDFCell> pc = pdfDM.createCellsFromRect();
 //
       PDFTextWithLocation pdfTWL = new PDFTextWithLocation();
-      System.out.println("Totla no. of unique lines : " + pdfTWL.uniqueLines());
+      System.out.println("Total no. of unique lines : " + pdfTWL.uniqueLines());
       minFontSize = pdfTWL.minHieght();
+      maxFontSize = pdfTWL.maxHieght();
       System.out.println("minimum font-size : " + minFontSize);
 
 
@@ -98,16 +102,22 @@ public class Application {
       PDFTableGeneratorHelper pdft = new PDFTableGeneratorHelper();
       pdft.setCells(pc);
       System.out.println("unique rectangles : "+pdft.uniqueRect());
+      pdft.tableStartEndFinder(pdfTWL);
 //      pdft.buildTable();
 
       TraprangeTest.run();
 
-      File htmlFile = new File("assests\\ToHTML.html");
-      Desktop.getDesktop().browse(htmlFile.toURI());
+      for(int l=0;l< TestExtractor.totalfiles;l++) {
+        File htmlFile = new File("assests\\ToHTML"+l+".html");
+        Desktop.getDesktop().browse(htmlFile.toURI());
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
 
 
   }
+
+
 }
+

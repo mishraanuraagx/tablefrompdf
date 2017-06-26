@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.jws.Oneway;
+import TableFromPdf.Application;
 
 
 public class PDFTableGeneratorHelper {
@@ -18,6 +20,68 @@ public class PDFTableGeneratorHelper {
 
   List<Integer[]> allRectIndexes;
   List<Integer> oneRectIndexes;
+  List<Integer> noOfLinesPerGap = new ArrayList<>();
+  public static List<Integer[]> tableStartFinishLines = new ArrayList<>();
+
+  public void tableStartEndFinder(PDFTextWithLocation pdftwl) {
+    double h = pdftwl.getDocumentHeight();
+    int lines = Application.uniqueDefLines;
+    double parts = h / lines;
+    for (int i = 1; i < lines; i++) {
+      int n = 0;
+      for (int j = 0; j < cells.size(); j++) {
+        if ((cells.get(j).getY() >= parts * (i - 1) && cells.get(j).getY() <= parts * i)
+            || (cells.get(j).getY() <= parts * (i - 1) && cells.get(j).getY()+cells.get(j).getH() >= parts * i)) {
+          n++;
+        }
+      }
+      System.out.println(i-1 + " : " + n);
+      noOfLinesPerGap.add(i-1,n);
+    }
+
+    boolean onGoing = false;
+    int start=0;
+    int count=0;
+    int value=0;
+    Integer[] temp;
+    for(int i=0;i<noOfLinesPerGap.size();i++) {
+      if(!onGoing){
+        if(noOfLinesPerGap.get(i)<2)continue;
+        value=noOfLinesPerGap.get(i);
+        count=1;
+        start=i;
+        onGoing=true;
+      }
+      else{
+        if(value == noOfLinesPerGap.get(i).intValue()){
+          count++;
+        } else if(count>=2){
+          temp = new Integer[]{start,count};
+          tableStartFinishLines.add(temp);
+          count=0;start=0;value=-1;onGoing=false;
+          if(noOfLinesPerGap.get(i)>=2){
+            count=1;
+            start=i;
+            value=noOfLinesPerGap.get(i).intValue();
+            onGoing=true;
+          }
+        }
+        else {
+          count=0;start=0;onGoing=false;
+          if(noOfLinesPerGap.get(i)>=2){
+            count=1;
+            start=i;
+            value=noOfLinesPerGap.get(i).intValue();
+            onGoing=true;
+          }
+        }
+      }
+
+    }
+    for(Integer[] i : tableStartFinishLines){
+    System.out.println(i[0]+" : " + i[1]);}
+
+  }
 
   public int uniqueRect() {
     int j;
@@ -28,18 +92,19 @@ public class PDFTableGeneratorHelper {
       PDFCell cell1 = cells.get(k);
       for (int i = k; i < cells.size(); i++) {
         PDFCell cell2 = cells.get(i);
-        if (Math.abs(cell1.getX()-cell2.getX())<2 && Math.abs(cell1.getY()-cell2.getY())<2
-            && Math.abs(cell1.getH()*cell1.getW() - cell2.getH()*cell2.getW())<1){
+        if (Math.abs(cell1.getX() - cell2.getX()) < 2 && Math.abs(cell1.getY() - cell2.getY()) < 2
+            && Math.abs(cell1.getH() * cell1.getW() - cell2.getH() * cell2.getW()) < 1) {
           indexes.add(k);
         }
       }
-      for (int i=0;i<indexes.size();i++){
+      for (int i = 0; i < indexes.size(); i++) {
         cells.remove(indexes.get(i).intValue());
       }
     }
-    j=cells.size();
+    j = cells.size();
     return j;
   }
+
 
   public void buildTable() throws IOException {
     Collections.sort(cells, new PDFCell());
